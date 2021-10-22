@@ -4,7 +4,6 @@ Imports System.IO
 Imports System.Text
 Imports System.Text.Json
 Imports System.Text.Json.Serialization
-'Imports System.Web.Script.Serialization
 Imports Newtonsoft.Json
 Imports Json
 
@@ -22,13 +21,9 @@ Module Program
         rs = New ADODB.Recordset
         rs.Open(sql, con, ADODB.CursorTypeEnum.adOpenDynamic)
 
-        'DEVO CREARE UN OGGETTO CHE RACCHIUDE QUESTI DATI, CHE SONO PRESI GIORNO PER GIORNO
-        'POI PASSO QUESTO OGGETTO COI DATI DENTRO ALLA FUNZIONE CHE CREA IL JSON
-        'PER POI GIRARLI ALL'ENDPOINT COL METODO POST
-
         Dim daylist As New List(Of Product)
 
-        While Not rs.EOF 'finché non siamo alla fine del file
+        While Not rs.EOF 
 
             Dim product As New Product()
             product.timestamp = rs(0).Value.ToString()
@@ -72,7 +67,6 @@ Module Program
         Public siteUri As New Uri("Web Endpoint URL")
         Public JavaScriptConvert As Object
 
-    ' Mando il json all'end-point
     Public Function UploadValues(siteUri As Uri, POST As String, jsonFile As JsonDocument)
         Return jsonFile
     End Function
